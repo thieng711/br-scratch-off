@@ -1,0 +1,56 @@
+
+<div class="scratch-container text-center position-relative w-50 mx-auto">
+  <div class="scratch-head">
+    <figure class="scatch-off-logo mb-3 mx-auto" [style.background-image]="'url(/assets/images/scratch-off/scatch-off-logo.png)'"></figure>
+    <div class="scratch-choose-prize-text" [hidden]="scratchOpenChoosedNumber">Choose a Prize!</div>
+    <div *ngIf="scratchDone">
+      <div class="title-congrat">Congratulations!</div>
+      <div class="sub-title-congrat">You just won</div>
+    </div>
+  </div>
+  <div
+    class="d-flex justify-content-center align-items-center flex-column center-item w-100"
+    [class.d-none]="scratchOpenChoosedNumber"
+  >
+    <div class="animated animate__zoomInUp">
+      <img class="sc-option-img pointer" src="/assets/images/scratch-off/prize-2.svg" (click)="chooseNumber(2)" />
+      <div>
+        <img class="sc-option-img pointer" src="/assets/images/scratch-off/prize-1.svg" (click)="chooseNumber(1)" />
+        <img class="sc-option-img pointer" src="/assets/images/scratch-off/prize-3.svg" (click)="chooseNumber(3)" />
+      </div>
+    </div>
+  </div>
+  <div class="center-item" [class.d-none]="!scratchOpenChoosedNumber">
+    <div id="sc-ticket" class="sc-container">
+      <div id="sc-award" class="award scratch-prize-choosed-text d-none">
+        <div *ngIf="data?.type === 'COINS'">
+          <div class="prize-value">{{ data.value }}</div>
+          <div class="prize-unit">Big Rich Coin</div>
+        </div>
+        <div *ngIf="data?.type === 'CASH'">
+          <div class="prize-value">${{ data.value }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="scratchDone" class="huhu-coins z-50">
+    <ng-lottie [options]="{ path: 'assets/lottie/exp-coins.json' }"></ng-lottie>
+  </div>
+  <div *ngIf="scratchDone" class="award-animation center-item z-50">
+    <div class="animated animate__bounceIn">
+      <div class="win-text text-bold thien w-100 font-Rubik">You win</div>
+    </div>
+    <div class="animated animate__bounceIn">
+      <div
+        class="prize-text text-bold thien-delay"
+        [class.font-Futura]="data.type === 'CASH'"
+        [countUp]="data.value"
+        [duration]="3000"
+        [kind]="data.type"
+      ></div>
+    </div>
+  </div>
+  <div class="scratch-bottom d-flex justify-content-center position-absolute w-100">
+    <div *ngIf="!scratchDone && scratchOpenChoosedNumber" class="scratch-guide-text">Scrub to Reveal</div>
+  </div>
+</div>
